@@ -51,13 +51,11 @@ export class AuthService {
 
   public async validate({ token }: ValidateRequestDto): Promise<ValidateResponse> {
     const decoded: Auth = await this.jwtService.verify(token);
-
     if (!decoded) {
       return { status: HttpStatus.FORBIDDEN, error: ['Token is invalid'], userId: null };
     }
 
     const auth: Auth = await this.jwtService.validateUser(decoded);
-
     if (!auth) {
       return { status: HttpStatus.CONFLICT, error: ['User not found'], userId: null };
     }

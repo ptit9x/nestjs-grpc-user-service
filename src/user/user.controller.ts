@@ -6,6 +6,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { UserByIdInterface } from './interfaces/user-by-id.interface';
 import { UserInterface } from './interfaces/user.interface';
+import { USER_SERVICE_NAME } from './user.pb';
 
 @Controller()
 export class UserController {
@@ -14,12 +15,12 @@ export class UserController {
     { id: 2, name: 'dn' },
   ];
 
-  @GrpcMethod('UserService')
+  @GrpcMethod(USER_SERVICE_NAME, 'FindOne')
   findOne(data: UserByIdInterface): UserInterface {
     return this.items.find(({ id }) => id === data.id);
   }
 
-  @GrpcStreamMethod('UserService')
+  @GrpcStreamMethod(USER_SERVICE_NAME, 'FindMany')
   findMany(data$: Observable<UserByIdInterface>): Observable<UserInterface> {
     const hero$ = new Subject<UserInterface>();
 

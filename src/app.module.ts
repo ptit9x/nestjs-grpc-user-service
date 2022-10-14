@@ -7,11 +7,11 @@ import { UserModule } from './user/user.module';
   imports: [    
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      database: 'micro_auth',
-      username: 'kevin',
-      password: null,
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT || 5432,
+      database: process.env.DB_NAME,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
       entities: ['dist/**/*.entity.{ts,js}'],
       synchronize: true, // never true in production!
     }),
